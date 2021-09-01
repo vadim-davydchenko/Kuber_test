@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deploy-replicas
+  labels:
+    app: k8s-app
+  spec:
+  selector:
+    matchLabels:
+      project: test2
+  template:
+    metadata:
+      labels:
+        project: test2
+    spec:
+    containers:
+        - name: test1-web
+          image: adv4000/k8sphp:version1
+          ports:
+            - containerPort: 80
