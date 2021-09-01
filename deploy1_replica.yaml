@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deploy-replicas
+  labels:
+    app: k8s-app
+    env: prod
+    owner: Vadim
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: test1
+  template:
+    metadata:
+      labels:
+        project: test1
+    spec:
+      containers:
+        - name: test1-web
+          image: adv4000/k8sphp:latest
+          ports:
+            - containerPort: 80

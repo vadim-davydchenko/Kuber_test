@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deploy-autoscale
+  labels:
+    app: k8s-app
+    env: prod
+    owner: Vadim
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      project: test2
+  template:
+    metadata:
+      labels:
+        project: test2
+    spec:
+      containers:
+        - name: test2-web
+          image: adv4000/k8sphp:latest
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: my-autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v2beta1v1
+    kind: Deployment
+    name: web-deploy-autoscale
+  minReplicas: 2
+  maxReplicas: 6
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: 80   
