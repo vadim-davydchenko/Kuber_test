@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-hosts
+  labels:
+    name: myingress
+spec:
+  rules:
+  - host: www.vasya.com
+    http:
+      paths:
+        - backend:
+            service:
+              name: main
+            port:
+              number: 80
+  - host: www.vasya.com
+    http:
+      paths:
+        - backend:
+            service:
+              name: web1
+            port:
+              number: 80 
+
+  
+  - host: www.vasya.com
+    http:
+      paths:
+        - backend:
+            service:
+              name: tomcat
+            port:
+              number: 8080
